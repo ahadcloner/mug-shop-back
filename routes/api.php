@@ -16,6 +16,6 @@ use App\Http\Controllers\UserController;
 */
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
-    Route::get('/register',[UserController::class ,'register'])->name('user.register');
+    Route::post('/register',[UserController::class ,'register'])->name('user.register');
 
 });

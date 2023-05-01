@@ -15,7 +15,11 @@ use App\Http\Controllers\UserController;
 |
 */
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-
     Route::post('/register',[UserController::class ,'register'])->name('user.register');
+    Route::post('/login',[UserController::class ,'login'])->name('user.login');
 
+});
+
+Route::group(['prefix' => 'user', 'as' => 'user.','middleware'=>'auth:api'], function () {
+    Route::post('/logout',[UserController::class ,'logout'])->name('user.logout');
 });

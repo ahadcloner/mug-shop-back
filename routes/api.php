@@ -22,6 +22,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
 Route::group(['prefix' => 'user', 'as' => 'user.','middleware'=>'auth:api'], function () {
     Route::post('/logout',[UserController::class ,'logout'])->name('user.logout');
+    Route::get('index',[UserController::class , 'index'])->name('user.index');
 });
     Route::get('/cleareverything', function () {
 

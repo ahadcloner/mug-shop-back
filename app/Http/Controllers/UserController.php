@@ -95,4 +95,20 @@ class UserController extends Controller
                 'message' => 'باموفقیت خارج شدید'
             ], 200);
     }
+
+
+    public function index()
+    {
+        $data = User::all();
+        foreach ($data as $d){
+            if($d->birth_date!=null)
+            {
+                $d->birth_date = verta($d->birth_date)->format('Y/m/d');
+            }
+            $d->created_at = str(verta($d->created_at)->format('Y/m/d'));
+
+        }
+        return Response()->json(['data'=>$data],200);
+    }
+
 }

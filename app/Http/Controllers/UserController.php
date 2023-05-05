@@ -99,7 +99,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $data = User::all();
+        $data = User::with(['city.state'])->get();
         foreach ($data as $d){
             if($d->birth_date!=null)
             {

@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('mobile',11)->nullable();
             $table->date('birth_date')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->boolean('status')->default(false);
+            $table->foreign('city_id')->references('id')
+                ->on('cities')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -28,6 +28,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'city_id'
     ];
 
     /**
@@ -38,4 +39,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function addresses(){
+        return $this->hasMany(UserAddress::class ,'user_id','id');
+    }
+    public function city(){
+        return $this->hasOne(City::class ,'id','city_id');
+    }
 }

@@ -111,4 +111,18 @@ class UserController extends Controller
         return Response()->json(['data'=>$data],200);
     }
 
+   public function get_addresses(Request $request){
+        $user = User::find($request->user_id);
+        if($user){
+            return Response()->json([
+                'data'=>$user->addresses
+            ],200);
+        }
+        else{
+            return Response()->json([
+                'message'=>'کاربر مورد نظر شما پیدا نشد'
+            ],404);
+        }
+   }
+
 }

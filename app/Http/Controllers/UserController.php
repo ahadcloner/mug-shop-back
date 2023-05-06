@@ -37,6 +37,7 @@ class UserController extends Controller
 
         $user = User ::create(
             [
+                'mobile'=>$request->mobile,
                 'email' => $request -> email,
                 'password' => Hash ::make($request -> password)
             ]
@@ -123,6 +124,23 @@ class UserController extends Controller
                 'message'=>'کاربر مورد نظر شما پیدا نشد'
             ],404);
         }
+   }
+
+   public function change_status(Request $request){
+        $user = User::find($request->user_id);
+
+       if($user){
+           $user->status =!(bool)$user->status;
+           $user->save();
+           return Response()->json([
+               'message'=>'تغییرات با موفقیت انجام شد'
+           ],200);
+       }
+       else{
+           return Response()->json([
+               'message'=>'کاربر مورد نظر شما پیدا نشد'
+           ],404);
+       }
    }
 
 }

@@ -39,6 +39,11 @@
         Route::get('/index', [\App\Http\Controllers\PermisionController::class, 'index'])->name('permision.index');
     });
 
+    Route::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'], function () {
+        Route::get('/index', [\App\Http\Controllers\StateController::class, 'index'])->name('state.index');
+        Route::get('/cities/{id}', [\App\Http\Controllers\StateController::class, 'cities'])->name('state.cities');
+    });
+
 
     Route::get('/cleareverything', function () {
 

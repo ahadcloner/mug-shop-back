@@ -18,7 +18,6 @@ class UserController extends Controller
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
 
-        return $request;
 
 
         $validator = Validator ::make($request -> all(), [

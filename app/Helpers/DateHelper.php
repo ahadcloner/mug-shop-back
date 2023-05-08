@@ -6,14 +6,18 @@ function faTOen($string)
 
 function farsiToEngDate($date)
 {
-    $result = explode('/', $date);
-    $year = $result[0];
-    $year = faTOen($year);
-    $month = $result[1];
-    $month = faTOen($month);
-    $day = $result[2];
-    $day = faTOen($day);
-    $_birth_date = Verta::jalaliToGregorian($year, $month, $day);
-    $new_birth_date = (string)$_birth_date[0] . '-' . (string)$_birth_date[1] . '-' . (string)$_birth_date[2];
-    return $new_birth_date;
+    if ($date)
+    {
+        $result = explode('/', $date);
+        $year = $result[0];
+        $year = faTOen($year);
+        $month = $result[1];
+        $month = faTOen($month);
+        $day = $result[2];
+        $day = faTOen($day);
+        $_birth_date = Verta::jalaliToGregorian($year, $month, $day);
+        $new_birth_date = (string)$_birth_date[0] . '-' . (string)$_birth_date[1] . '-' . (string)$_birth_date[2];
+        return $new_birth_date;
+    }
+
 }

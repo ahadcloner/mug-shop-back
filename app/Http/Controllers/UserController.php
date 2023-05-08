@@ -17,6 +17,10 @@ class UserController extends Controller
 
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
+
+        return $request;
+
+
         $validator = Validator ::make($request -> all(), [
             'email' => 'required|email|unique:users,email',
             'password' => 'required'
@@ -34,15 +38,25 @@ class UserController extends Controller
                 422
             );
         }
+        try {
+            $user = User ::create(
+                [
+                    'mobile'=>$request->mobile,
+                    'email' => $request -> email,
+                    'city_id'=>$request->city_id ,
+                    'full_name'=>$request->full_name,
+                    'birth_date'=> farsiToEngDate($request->birth_date),
+                    'password' => Hash ::make($request -> password) ,
+                    'status'=>$request->status
+                ]
+            );
+            return Response() -> json(['message' => 'تبریک ، ثبت نام شما با موفقیت انجام شد'], 201);
+        }
+        catch (Error $e)
+        {
+            return Response() -> json(['error' => 'فرمت ورودی ها را کنترل کنید'], 500);
+        }
 
-        $user = User ::create(
-            [
-                'mobile'=>$request->mobile,
-                'email' => $request -> email,
-                'password' => Hash ::make($request -> password)
-            ]
-        );
-        return Response() -> json(['message' => 'تبریک ، ثبت نام شما با موفقیت انجام شد'], 201);
 
     }
 

@@ -26,7 +26,7 @@
         Route::get('index', [UserController::class, 'index'])->name('user.index');
         Route::post('/get-addresses',[UserController::class,'get_addresses'])->name('user.addresses');
         Route::post('/change-status',[UserController::class,'change_status'])->name('user.change-status');
-        Route::get('user/find/{id}' ,[UserController::class , 'find'])->name('user.find');
+        Route::get('/find/{id}' ,[UserController::class , 'find'])->name('user.find');
     });
 
 

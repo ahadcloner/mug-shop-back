@@ -13,4 +13,7 @@ class UserAddress extends Model
         'created_at',
         'updated_at'
     ];
+    public function city(){
+        return $this->hasOne(City::class);
+    }
 }

@@ -157,7 +157,7 @@ class UserController extends Controller
    }
 
    public function find($id){
-        $user = User::find($id);
+        $user = User::with('city.state')->find($id);
         if ($user)
         {
             return Response()->json(['data'=>$user] ,200) ;

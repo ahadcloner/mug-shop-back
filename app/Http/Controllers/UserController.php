@@ -156,4 +156,13 @@ class UserController extends Controller
        }
    }
 
+   public function find($id){
+        $user = User::find($id);
+        if ($user)
+        {
+            return Response()->json(['data'=>$user] ,200) ;
+        }
+        return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],400);
+   }
+
 }

@@ -27,6 +27,8 @@
         Route::post('/get-addresses',[UserController::class,'get_addresses'])->name('user.addresses');
         Route::post('/change-status',[UserController::class,'change_status'])->name('user.change-status');
         Route::get('/find/{id}' ,[UserController::class , 'find'])->name('user.find');
+        Route::patch('/update/{id}' ,[UserController::class , 'update'])->name('user.update');
+        Route::delete('/delete/{id}' ,[UserController::class , 'delete'])->name('user.delete');
     });
 
 
@@ -48,16 +50,22 @@
 
     Route::get('/cleareverything', function () {
 
-        $clearcache = Artisan::call('migrate:fresh');
-        echo "Cache cleared<br>";
+//        $clearcache = Artisan::call('migrate:fresh');
+//        echo "Cache cleared<br>";
+//
+//        $clearcache = Artisan::call('passport:install');
+//        echo "Cache cleared<br>";
+//
+//        $clearview = Artisan::call('view:clear');
+//        echo "View cleared<br>";
+//
+//        $clearconfig = Artisan::call('config:cache');
+//        echo "Config cleared<br>";
 
-        $clearcache = Artisan::call('passport:install');
-        echo "Cache cleared<br>";
+        $clearconfig = Artisan::call('cache:clear');
+        echo "cache cleared<br>";
 
-        $clearview = Artisan::call('view:clear');
-        echo "View cleared<br>";
-
-        $clearconfig = Artisan::call('config:cache');
-        echo "Config cleared<br>";
+        $clearconfig = Artisan::call('config:clear');
+        echo "config cleared<br>";
 
     });

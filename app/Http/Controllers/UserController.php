@@ -241,4 +241,22 @@
                 return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],404);
             }
         }
+
+        public function revoke_role(Request $request)
+        {
+            $user = User::find($request->user_id);
+            if ($user) {
+                $role = Role::where('name', '=', $request->role)->first();
+                if ($role) {
+                    $user->removeRole($role);
+                    return Response()->json(['message'=>'عملیات با موفقیت انجام شد'],200);
+                }
+                else{
+                    return Response()->json(['message'=>'نقش مورد نظر پیدا نشد'],404);
+                }
+            }
+            else{
+                return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],404);
+            }
+        }
     }

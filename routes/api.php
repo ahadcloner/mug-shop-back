@@ -31,6 +31,7 @@
         Route::delete('/delete/{id}' ,[UserController::class , 'delete'])->name('user.delete');
         Route::get('/roles/{id}' ,[UserController::class , 'get_roles'])->name('user.get-roles');
         Route::post('/roles/assign' ,[UserController::class , 'assign_role'])->name('user.assign-role');
+        Route::post('/roles/revoke' ,[UserController::class , 'revoke_role'])->name('user.revoke-role');
     });
 
 

@@ -29,6 +29,8 @@
         Route::get('/find/{id}' ,[UserController::class , 'find'])->name('user.find');
         Route::patch('/update/{id}' ,[UserController::class , 'update'])->name('user.update');
         Route::delete('/delete/{id}' ,[UserController::class , 'delete'])->name('user.delete');
+        Route::get('/roles/{id}' ,[UserController::class , 'get_roles'])->name('user.get-roles');
+        Route::post('/roles/assign' ,[UserController::class , 'assign_role'])->name('user.assign-role');
     });
 
 
@@ -62,10 +64,12 @@
 //        $clearconfig = Artisan::call('config:cache');
 //        echo "Config cleared<br>";
 
-        $clearconfig = Artisan::call('cache:clear');
-        echo "cache cleared<br>";
+        $clearconfig = Artisan::call('migrate:fresh');
+//        $clearconfig = Artisan::call('passport:install');
+        $clearconfig = Artisan::call('db:seed');
 
-        $clearconfig = Artisan::call('config:clear');
-        echo "config cleared<br>";
+//        $clearconfig = Artisan::call('permission:create-permission edit-articles');
+
+        echo "ok<br>";
 
     });

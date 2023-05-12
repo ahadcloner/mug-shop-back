@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+
     use App\Models\User;
     use Illuminate\Http\Request;
     use Illuminate\Http\Response;
@@ -9,6 +10,7 @@
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Support\Facades\Hash;
     use PHPUnit\Framework\Error;
+    use Spatie\Permission\Models\Role;
 
 
     class UserController extends Controller
@@ -45,7 +47,7 @@
                         'full_name' => $request->full_name,
                         'birth_date' => farsiToEngDate($request->birth_date),
                         'password' => Hash::make($request->password),
-                        'status' => $request->status?$request->status:false
+                        'status' => $request->status ? $request->status : false
                     ]
                 );
                 return Response()->json(['message' => 'تبریک ، ثبت نام شما با موفقیت انجام شد'], 201);
@@ -185,19 +187,16 @@
                 $user->city_id = $request->city_id;
                 $user->full_name = $request->full_name;
                 $user->birth_date = farsiToEngDate($request->birth_date);
-                if($request->password)
-                {
+                if ($request->password) {
                     $user->password = Hash::make($request->password);
                 }
-                if($request->status)
-                {
+                if ($request->status) {
                     $user->status = $request->status;
-                }
-                else{
-                    $user->status=false;
+                } else {
+                    $user->status = false;
                 }
                 $user->save();
-                return Response()->json(['message'=>'تغییرات با موفقیت انجام شد'] ,200);
+                return Response()->json(['message' => 'تغییرات با موفقیت انجام شد'], 200);
 
 
             } else {
@@ -205,12 +204,41 @@
             }
 
         }
-        public function delete($id){
+
+        public function delete($id)
+        {
             $user = User::find($id);
             if ($user) {
                 $user->delete();
                 return Response()->json(['message' => 'کابر با موفقیت حذف شد'], 200);
             }
             return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 400);
+        }
+
+        public function get_roles($id)
+        {
+            $user = User::find($id);
+            if ($user) {
+                return Response()->json(['data' => $user->roles()->pluck('name')->toArray()], 200);
+            }
+            return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 400);
+        }
+
+        public function assign_role(Request $request)
+        {
+            $user = User::find($request->user_id);
+            if ($user) {
+                $role = Role::where('name', '=', $request->role)->first();
+                if ($role) {
+                    $user->assignRole($role);
+                    return Response()->json(['message'=>'عملیات با موفقیت انجام شد'],200);
+                }
+                else{
+                    return Response()->json(['message'=>'نقش مورد نظر پیدا نشد'],404);
+                }
+            }
+            else{
+                return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],404);
+            }
         }
     }

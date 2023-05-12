@@ -219,7 +219,7 @@
         {
             $user = User::find($id);
             if ($user) {
-                return Response()->json(['data' => $user->roles()->pluck('name')->toArray()], 200);
+                return Response()->json(['data' => $user->roles()->get()], 200);
             }
             return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 400);
         }

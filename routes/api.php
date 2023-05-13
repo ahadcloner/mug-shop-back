@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\RoleController;
+    use App\Http\Controllers\BannerController;
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +54,11 @@ use Illuminate\Http\Request;
         Route::delete('/delete/{id}', [PermisionController::class, 'delete'])->name('permision.delete');
         Route::get('/find/{id}', [PermisionController::class, 'find'])->name('permision.find');
         Route::patch('/update/{id}', [PermisionController::class, 'update'])->name('permision.update');
+    });
+
+    Route::group(['prefix' => 'banner', 'as' => 'banner.', 'middleware' => 'auth:api'], function () {
+        Route::get('/index', [BannerController::class, 'index'])->name('banner.index');
+        Route::post('/create', [BannerController::class, 'create'])->name('banner.create');
     });
 
     Route::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'], function () {

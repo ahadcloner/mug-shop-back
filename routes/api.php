@@ -1,6 +1,7 @@
 <?php
 
-    use Illuminate\Http\Request;
+use App\Http\Controllers\PermisionController;
+use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\RoleController;
@@ -38,11 +39,20 @@
     Route::group(['prefix' => 'role', 'as' => 'role.', 'middleware' => 'auth:api'], function () {
         Route::post('/create', [RoleController::class, 'create'])->name('role.create');
         Route::get('/index', [RoleController::class, 'index'])->name('role.index');
+        Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+        Route::get('/permissions/{id}', [RoleController::class, 'get_permissions'])->name('role.permissions');
+        Route::post('/grant-permission', [RoleController::class, 'grant_permission'])->name('role.grant-permission');
+        Route::post('/revoke-permission', [RoleController::class, 'revoke_permission'])->name('role.revoke-permission');
+        Route::get('/find/{id}', [RoleController::class, 'find'])->name('role.find');
+        Route::patch('/update/{id}', [RoleController::class, 'update'])->name('role.update');
     });
 
     Route::group(['prefix' => 'permision', 'as' => 'permision.', 'middleware' => 'auth:api'], function () {
-        Route::post('/create', [\App\Http\Controllers\PermisionController::class, 'create'])->name('permision.create');
-        Route::get('/index', [\App\Http\Controllers\PermisionController::class, 'index'])->name('permision.index');
+        Route::post('/create', [PermisionController::class, 'create'])->name('permision.create');
+        Route::get('/index', [PermisionController::class, 'index'])->name('permision.index');
+        Route::delete('/delete/{id}', [PermisionController::class, 'delete'])->name('permision.delete');
+        Route::get('/find/{id}', [PermisionController::class, 'find'])->name('permision.find');
+        Route::patch('/update/{id}', [PermisionController::class, 'update'])->name('permision.update');
     });
 
     Route::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'], function () {

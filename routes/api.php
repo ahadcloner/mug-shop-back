@@ -59,6 +59,9 @@ use Illuminate\Http\Request;
     Route::group(['prefix' => 'banner', 'as' => 'banner.', 'middleware' => 'auth:api'], function () {
         Route::get('/index', [BannerController::class, 'index'])->name('banner.index');
         Route::post('/create', [BannerController::class, 'create'])->name('banner.create');
+        Route::post('/inc-order/{id}', [BannerController::class, 'inc_order'])->name('banner.inc-order');
+        Route::post('/desc-order/{id}', [BannerController::class, 'desc_order'])->name('banner.desc-order');
+        Route::delete('/delete/{id}', [BannerController::class, 'delete'])->name('banner.delete');
     });
 
     Route::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'], function () {

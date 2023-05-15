@@ -34,6 +34,7 @@ Route ::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth:api'],
     Route ::get('/roles/{id}', [UserController::class, 'get_roles']) -> name('user.get-roles');
     Route ::post('/roles/assign', [UserController::class, 'assign_role']) -> name('user.assign-role');
     Route ::post('/roles/revoke', [UserController::class, 'revoke_role']) -> name('user.revoke-role');
+    Route ::get('/auth/find', [UserController::class, 'auth_find']) -> name('user.auth-find');
 });
 
 

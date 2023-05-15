@@ -163,6 +163,15 @@
             return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 400);
         }
 
+        public function auth_find(Request $request)
+        {
+            $user = User::with('city.state')->find(auth()->id());
+            if ($user->birth_date != null) {
+                $user->birth_date = verta($user->birth_date)->format('Y/m/d');
+            }
+            return Response()->json(['data' => $user], 200);
+        }
+
         public function update($id, Request $request)
         {
 
@@ -231,14 +240,12 @@
                 $role = Role::where('name', '=', $request->role)->first();
                 if ($role) {
                     $user->assignRole($role);
-                    return Response()->json(['message'=>'عملیات با موفقیت انجام شد'],200);
+                    return Response()->json(['message' => 'عملیات با موفقیت انجام شد'], 200);
+                } else {
+                    return Response()->json(['message' => 'نقش مورد نظر پیدا نشد'], 404);
                 }
-                else{
-                    return Response()->json(['message'=>'نقش مورد نظر پیدا نشد'],404);
-                }
-            }
-            else{
-                return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],404);
+            } else {
+                return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 404);
             }
         }
 
@@ -249,14 +256,12 @@
                 $role = Role::where('name', '=', $request->role)->first();
                 if ($role) {
                     $user->removeRole($role);
-                    return Response()->json(['message'=>'عملیات با موفقیت انجام شد'],200);
+                    return Response()->json(['message' => 'عملیات با موفقیت انجام شد'], 200);
+                } else {
+                    return Response()->json(['message' => 'نقش مورد نظر پیدا نشد'], 404);
                 }
-                else{
-                    return Response()->json(['message'=>'نقش مورد نظر پیدا نشد'],404);
-                }
-            }
-            else{
-                return Response()->json(['message'=>'کاربر مورد نظر پیدا نشد'],404);
+            } else {
+                return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 404);
             }
         }
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->boolean('status')->default(false);
+            $table->dateTime('email_verified_at')->nullable();
             $table->foreign('city_id')->references('id')
                 ->on('cities')->cascadeOnDelete();
             $table->timestamps();

@@ -4,6 +4,7 @@
 
 
     use App\Models\User;
+    use Illuminate\Auth\Events\Registered;
     use Illuminate\Http\Request;
     use Illuminate\Http\Response;
     use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,7 @@
                         'status' => $request->status ? $request->status : false
                     ]
                 );
+                event(new Registered($user));
                 return Response()->json(['message' => 'تبریک ، ثبت نام شما با موفقیت انجام شد'], 201);
             } catch (Error $e) {
                 return Response()->json(['error' => 'فرمت ورودی ها را کنترل کنید'], 500);

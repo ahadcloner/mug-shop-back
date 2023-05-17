@@ -76,19 +76,19 @@ Route ::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'
 
 Route ::get('/cleareverything', function () {
 
-//        $clearcache = Artisan::call('migrate:fresh');
-//        echo "Cache cleared<br>";
-//
-//        $clearcache = Artisan::call('passport:install');
-//        echo "Cache cleared<br>";
-//
-//        $clearview = Artisan::call('view:clear');
-//        echo "View cleared<br>";
-//
-//        $clearconfig = Artisan::call('config:cache');
-//        echo "Config cleared<br>";
+        $clearcache = Artisan::call('migrate:fresh');
+        echo "Cache cleared<br>";
 
-    $clearconfig = Artisan ::call('migrate:fresh');
+        $clearcache = Artisan::call('passport:install');
+        echo "Cache cleared<br>";
+
+        $clearview = Artisan::call('view:clear');
+        echo "View cleared<br>";
+
+        $clearconfig = Artisan::call('config:cache');
+        echo "Config cleared<br>";
+
+//    $clearconfig = Artisan ::call('migrate:fresh');
 //        $clearconfig = Artisan::call('passport:install');
     $clearconfig = Artisan ::call('db:seed');
 

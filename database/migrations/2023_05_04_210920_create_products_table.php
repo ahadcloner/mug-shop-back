@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('product_category_id');
+            $table->foreign('product_category_id')->references('id')
+                ->on('product_categories')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_group_id');
+            $table->foreign('product_group_id')->references('id')
+                ->on('product_groups')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_type_id');
+            $table->foreign('product_type_id')->references('id')
+                ->on('product_types')->cascadeOnDelete();
+            $table->double('price')->default(0);
+            $table->double('discount')->default(0);
+            $table->integer('total')->default(0);
             $table->timestamps();
         });
     }

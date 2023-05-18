@@ -36,6 +36,8 @@ Route ::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth:api'],
     Route ::get('/auth/find', [UserController::class, 'auth_find']) -> name('user.auth-find');
     Route ::post('/auth/verify-mail', [UserController::class, 'verify']) -> name('user.verify-mail');
     Route ::post('/auth/activate-account/{code}', [UserController::class, 'activate']) -> name('user.activate-account');
+    Route ::get('/auth/status', [UserController::class, 'get_account_status']) -> name('user.status');
+
 });
 
 

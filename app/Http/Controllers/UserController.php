@@ -79,7 +79,7 @@
         {
             $user = \auth()->user();
             try {
-                
+
                 if ($user->email_verified_at == null) {
                     if (str($code) == str($user->tow_factor_code)) {
                         $user->status = true;
@@ -304,5 +304,9 @@
             }
         }
 
+        public function get_account_status()
+        {
+            return Response()->json(['data'=>\auth()->user()->status],200);
+        }
 
     }

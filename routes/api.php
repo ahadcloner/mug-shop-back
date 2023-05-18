@@ -18,9 +18,8 @@ use App\Http\Controllers\BannerController;
 |
 */
 Route ::group(['prefix' => 'user', 'as' => 'user.'], function () {
-    Route ::post('/register', [UserController::class, 'register']) -> name('user.register');
+    Route ::post('/register', [UserController::class, 'register'])-> name('user.register');
     Route ::post('/login', [UserController::class, 'login']) -> name('user.login');
-
 });
 
 Route ::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth:api'], function () {
@@ -35,6 +34,8 @@ Route ::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth:api'],
     Route ::post('/roles/assign', [UserController::class, 'assign_role']) -> name('user.assign-role');
     Route ::post('/roles/revoke', [UserController::class, 'revoke_role']) -> name('user.revoke-role');
     Route ::get('/auth/find', [UserController::class, 'auth_find']) -> name('user.auth-find');
+    Route ::post('/auth/verify-mail', [UserController::class, 'verify']) -> name('user.verify-mail');
+    Route ::post('/auth/activate-account/{code}', [UserController::class, 'activate']) -> name('user.activate-account');
 });
 
 
@@ -74,23 +75,24 @@ Route ::group(['prefix' => 'state', 'as' => 'state.', 'middleware' => 'auth:api'
 });
 
 
+
 Route ::get('/cleareverything', function () {
 
-        $clearcache = Artisan::call('migrate:fresh');
-        echo "Cache cleared<br>";
-
-        $clearcache = Artisan::call('passport:install');
-        echo "Cache cleared<br>";
-
-        $clearview = Artisan::call('view:clear');
-        echo "View cleared<br>";
+//        $clearcache = Artisan::call('migrate:fresh');
+//        echo "Cache cleared<br>";
+//
+//        $clearcache = Artisan::call('passport:install');
+//        echo "Cache cleared<br>";
+//
+//        $clearview = Artisan::call('view:clear');
+//        echo "View cleared<br>";
 
         $clearconfig = Artisan::call('config:cache');
         echo "Config cleared<br>";
 
 //    $clearconfig = Artisan ::call('migrate:fresh');
 //        $clearconfig = Artisan::call('passport:install');
-    $clearconfig = Artisan ::call('db:seed');
+//    $clearconfig = Artisan ::call('db:seed');
 
 //        $clearconfig = Artisan::call('permission:create-permission edit-articles');
 

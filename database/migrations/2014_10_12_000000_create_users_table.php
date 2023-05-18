@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('mobile',11)->nullable();
+            $table->string('tow_factor_code',4)->nullable();
             $table->date('birth_date')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->boolean('status')->default(false);

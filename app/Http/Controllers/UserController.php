@@ -3,13 +3,18 @@
     namespace App\Http\Controllers;
 
 
+    use App\Mail\TowFactorMail;
     use App\Models\User;
+    use Carbon\Carbon;
     use Illuminate\Auth\Events\Registered;
     use Illuminate\Http\Request;
     use Illuminate\Http\Response;
     use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Mail;
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Support\Facades\Hash;
+    use PHPUnit\Exception;
     use PHPUnit\Framework\Error;
     use Spatie\Permission\Models\Role;
 
@@ -20,7 +25,6 @@
 
         public function register(Request $request): \Illuminate\Http\JsonResponse
         {
-
 
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email|unique:users,email',
@@ -48,16 +52,49 @@
                         'full_name' => $request->full_name,
                         'birth_date' => farsiToEngDate($request->birth_date),
                         'password' => Hash::make($request->password),
+                        'tow_factor_code' => $randomNumber = str(random_int(1000, 9999)),
                         'status' => $request->status ? $request->status : false
                     ]
                 );
-                event(new Registered($user));
                 return Response()->json(['message' => 'تبریک ، ثبت نام شما با موفقیت انجام شد'], 201);
             } catch (Error $e) {
                 return Response()->json(['error' => 'فرمت ورودی ها را کنترل کنید'], 500);
             }
 
 
+        }
+
+        public function verify()
+        {
+            try {
+                $user = \auth()->user();
+                Mail::to($user->email)->send(new TowFactorMail($user));
+                return Response()->json(['message' => 'ایمیل فعال سازی حساب برای شما ارسال شد'], 200);
+            } catch (Exception $e) {
+                return Response()->json(['message' => 'خطا در ارسال ایمیل فعال سازی'], 500);
+            }
+        }
+
+        public function activate($code)
+        {
+            $user = \auth()->user();
+            try {
+                
+                if ($user->email_verified_at == null) {
+                    if (str($code) == str($user->tow_factor_code)) {
+                        $user->status = true;
+                        $user->email_verified_at = Carbon::now();
+                        $user->save();
+                        return Response()->json(['message' => 'حساب کاربری شما فعال شد'], 200);
+                    } else {
+                        return Response()->json(['message' => 'کد فعال سازی اشتباه است'], 500);
+                    }
+                } else {
+                    return Response()->json(['message' => 'حساب کاربری شما فعال است'], 300);
+                }
+            } catch (\Exception $e) {
+                return Response()->json(['message' => 'خطا در فعال سازی حساب کاربری', 'err' => $e], 500);
+            }
         }
 
         public function login(Request $request)
@@ -266,4 +303,6 @@
                 return Response()->json(['message' => 'کاربر مورد نظر پیدا نشد'], 404);
             }
         }
+
+
     }

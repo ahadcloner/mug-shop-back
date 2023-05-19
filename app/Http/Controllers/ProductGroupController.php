@@ -71,10 +71,8 @@
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'order' => 'required',
             ], [
                 'name.required' => 'نام گروه را وارد کنید',
-                'order.required' => 'الویت را وارد کنید',
             ]);
 
             if ($validator->fails()) {
@@ -85,7 +83,6 @@
             }
             $pg = ProductGroup::find($id);
             $pg->name = $request->name;
-            $pg->order = $request->order;
             $pg->save();
             return Response()->json(['message','عملیات با موفقیت انجام شد'],200);
         }
@@ -99,5 +96,15 @@
                 return Response()->json(['message','عملیات با موفقیت انجام شد'],200);
             }
             return Response()->json(['message','گروه محصول مورد نظر یافت نشد'],404);
+        }
+
+        public function find($id)
+        {
+            $item = ProductGroup::find($id);
+            if($item)
+            {
+                return Response()->json(['data'=>$item],200);
+            }
+            return Response()->json(['message'=>'گروه محصول مورد نظر یافت نشد'],404);
         }
     }

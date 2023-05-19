@@ -1,7 +1,10 @@
 <?php
 
+    use App\Http\Controllers\BrandController;
     use App\Http\Controllers\PermisionController;
+    use App\Http\Controllers\ProductCategoryController;
     use App\Http\Controllers\ProductGroupController;
+    use App\Models\ProductCategory;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\UserController;
@@ -84,7 +87,23 @@
         Route::patch('/update/{id}', [ProductGroupController::class, 'update'])->name('product-group.update');
         Route::post('/inc/{id}', [ProductGroupController::class, 'inc'])->name('product-group.inc');
         Route::post('/desc/{id}', [ProductGroupController::class, 'desc'])->name('product-group.desc');
+        Route::get('/find/{id}', [ProductGroupController::class, 'find'])->name('product-group.find');
 
+    });
+
+    Route::group(['prefix' => 'product-category', 'as' => 'product-category.', 'middleware' => 'auth:api'], function () {
+        Route::post('/create', [ProductCategoryController::class, 'create'])->name('product-category.create');
+        Route::get('/index', [ProductCategoryController::class, 'index'])->name('product-category.index');
+        Route::delete('/delete/{id}', [ProductCategoryController::class, 'delete'])->name('product-category.delete');
+        Route::patch('/update/{id}', [ProductCategoryController::class, 'update'])->name('product-category.update');
+        Route::get('/find/{id}', [ProductCategoryController::class, 'find'])->name('product-category.find');
+    });
+
+    Route::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => 'auth:api'], function () {
+        Route::post('/create', [BrandController::class, 'create'])->name('brand.create');
+        Route::get('/index', [BrandController::class, 'index'])->name('brand.index');
+        Route::delete('/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+        Route::patch('/update/{id}', [BrandController::class, 'update'])->name('brand.update');
     });
 
 

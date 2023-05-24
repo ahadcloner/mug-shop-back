@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Validator;
@@ -73,5 +74,13 @@ class BrandController extends Controller
             return Response()->json(['message','عملیات با موفقیت انجام شد'],200);
         }
         return Response()->json(['message','برند مورد نظر یافت نشد'],404);
+    }
+    public function find($id): \Illuminate\Http\JsonResponse
+    {
+        $item = Brand::find($id);
+        if ($item) {
+            return Response()->json(['data' => $item], 200);
+        }
+        return Response()->json(['message' => 'برند مورد نظر یافت نشد'], 404);
     }
 }

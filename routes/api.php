@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\PermisionController;
+    use App\Http\Controllers\OptionController;
+    use App\Http\Controllers\PermisionController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductGroupController;
 use App\Models\ProductCategory;
@@ -111,7 +112,17 @@ Route ::group(['prefix' => 'brand', 'as' => 'brand.', 'middleware' => 'auth:api'
     Route ::get('/index', [BrandController::class, 'index']) -> name('brand.index');
     Route ::delete('/delete/{id}', [BrandController::class, 'delete']) -> name('brand.delete');
     Route ::patch('/update/{id}', [BrandController::class, 'update']) -> name('brand.update');
+    Route ::get('/find/{id}', [BrandController::class, 'find']) -> name('brand.find');
 });
+
+
+    Route ::group(['prefix' => 'option', 'as' => 'option.', 'middleware' => 'auth:api'], function () {
+        Route ::post('/create', [OptionController::class, 'create']) -> name('option.create');
+        Route ::get('/index', [OptionController::class, 'index']) -> name('option.index');
+        Route ::delete('/delete/{id}', [OptionController::class, 'delete']) -> name('option.delete');
+        Route ::patch('/update/{id}', [OptionController::class, 'update']) -> name('option.update');
+        Route ::get('/find/{id}', [OptionController::class, 'find']) -> name('option.find');
+    });
 
 
 Route ::get('/cleareverything', function () {

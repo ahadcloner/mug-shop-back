@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class Tag extends Model
 {
     use HasFactory;
     protected $guarded=[];
-    protected $hidden = ['created_at' ,'updated_at'];
+    protected $hidden =['created_at' ,'updated_at'];
 }

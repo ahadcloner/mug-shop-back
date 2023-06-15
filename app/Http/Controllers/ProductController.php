@@ -6,14 +6,17 @@ namespace App\Http\Controllers;
 use App\Models\Attribute;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductBrand;
+use App\Models\ProductImage;
 use App\Models\ProductTag;
 use App\Models\Tag;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use League\OAuth2\Server\RequestRefreshTokenEvent;
 use App\Models\AttributeValue;
 use PHPUnit\Framework\Error;
+use function Sodium\add;
 
 
 class ProductController extends Controller
@@ -25,6 +28,7 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+
         $validator = Validator ::make($request -> all(), [
             'name' => 'required|unique:products',
             'price' => 'required|min:0|numeric',
@@ -93,7 +97,7 @@ class ProductController extends Controller
                 foreach ($request -> tags as $key => $value) {
                     $product_tag = new ProductTag();
                     $product_tag->product_id = $item->id;
-                    $product_tag->tag_id =(int)$value;
+                    $product_tag->tag_id =$value['value'];
                     $product_tag->save();
                 }
             }
@@ -105,4 +109,27 @@ class ProductController extends Controller
             return Response() -> json(['message' => $e], 500);
         }
     }
+    public function save_product_images(Request $request)
+    {
+        try {
+            $count = count($request->banners);
+            for($i=0;$i<$count;$i++)
+            {
+                $address = saveOnDisk($request , 'banner'+str($count));
+                $product_image = new ProductImage();
+                $product_image->product_id = $request->product_id;
+                $product_image->image =$address;
+                $product_image->save();
+            }
+            return Response()->json(['message'=>'عملیات با موفقیت انجام شد'],201);
+        }
+        catch (\Exception $e)
+        {
+            return Response()->json(['message'=>'خطا در ذخیره سازی تصویر محصول'],500);
+        }
+
+    }
+
+
+
 }

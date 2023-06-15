@@ -147,6 +147,7 @@ Route ::group(['prefix' => 'option', 'as' => 'option.', 'middleware' => 'auth:ap
 Route ::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => 'auth:api'], function () {
     Route ::post('/create', [ProductController::class, 'create']) -> name('product.create');
     Route ::get('/index', [ProductController::class, 'index']) -> name('product.index');
+    Route::post('/save-images' , [ProductController::class ,'save_product_images'] )->name('product.save-images');
 });
 
 

@@ -9,5 +9,5 @@ class ProductImage extends Model
 {
     use HasFactory;
     protected $guarded=[];
-    protected $hidden =['updated_at'];
+    protected $hidden =['updated_at','product_id','created_at'];
 }

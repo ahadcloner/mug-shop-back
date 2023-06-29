@@ -23,7 +23,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Response() -> json(['data' => Product ::all()], 200);
+        $data = Product::with(['tags.tag','images','brand.brand','attributes.attribute_value.attribute','category'])->get();
+        return Response() -> json(['data' => $data], 200);
     }
 
     public function create(Request $request)

@@ -102,7 +102,7 @@ class ProductController extends Controller
                 }
             }
 
-            return Response() -> json(['message', 'عملیات با موفقیت انجام شد'], 201);
+            return Response() -> json(['message', 'عملیات با موفقیت انجام شد' , 'data'=>$item->id], 201);
 
 
         } catch (\Exception $e) {

@@ -12,3 +12,4 @@ function saveOnDisk(Request $request, $file_name)
     $path = 'myimages/' . $name . $request->file($file_name)->getClientOriginalName();
     return $path;
 }
+

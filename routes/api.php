@@ -148,6 +148,7 @@ Route ::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => 'auth:
     Route ::post('/create', [ProductController::class, 'create']) -> name('product.create');
     Route ::get('/index', [ProductController::class, 'index']) -> name('product.index');
     Route::post('/save-images' , [ProductController::class ,'save_product_images'] )->name('product.save-images');
+    Route::post('/image/create' , [\App\Http\Controllers\ProductImageController::class,'create'])->name('product.image.create');
 });
 
 
